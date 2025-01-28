@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WP-URDetails Disabler
+Plugin Name: WP-URLDetails Disabler
 Description: Blocks outgoing requests with the WP-URLDetails user-agent.
 Version: 1.0
 Author: MrBoombastic
@@ -20,11 +20,16 @@ function block_requests_register_settings()
 
     add_settings_field(
         'block_requests_enable',
-        __('Enable Blocking Requests', 'block-requests'),
+        __('Enable', 'block-requests'),
         'block_requests_enable_callback',
         'block-requests-settings',
         'block_requests_settings_section'
     );
+}
+
+function block_requests_settings_section_callback()
+{
+    echo '<p>' . esc_html__('Configure the request blocking settings for your site.', 'block-requests') . '</p>';
 }
 
 add_action('admin_init', 'block_requests_register_settings');
@@ -32,8 +37,8 @@ add_action('admin_init', 'block_requests_register_settings');
 function block_requests_add_settings_page()
 {
     add_options_page(
-        __('Block Requests Settings', 'block-requests'),
-        __('Block Requests', 'block-requests'),
+        __('WP-URLDetails Disabler', 'block-requests'),
+        __('Block WP-URLDetails', 'block-requests'),
         'manage_options',
         'block-requests-settings',
         'block_requests_settings_page'
