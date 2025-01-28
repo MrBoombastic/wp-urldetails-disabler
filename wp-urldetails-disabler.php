@@ -1,11 +1,18 @@
 <?php
 /*
-Plugin Name: WP-URLDetails Disabler
-Description: Blocks outgoing requests with the WP-URLDetails user-agent.
-Version: 1.0
-Author: MrBoombastic
+* Plugin Name:          WP-URLDetails Disabler
+* Description:          Blocks outgoing requests with the WP-URLDetails user-agent.
+* Version:              1.0
+* Author:               MrBoombastic
+* Requires at least:    6.7.1
+* Requires PHP:         8.2
+* Plugin URI:           https://github.com/MrBoombastic/wp-urldetails-disabler
+* Author URI:           https://amroz.xyz
+* License:              WTFPL
+* License URI:          https://choosealicense.com/licenses/wtfpl/
 */
 
+// Settings boilerplate and shitfest begin
 
 function block_requests_register_settings()
 {
@@ -13,23 +20,23 @@ function block_requests_register_settings()
 
     add_settings_section(
         'block_requests_settings_section',
-        __('Request Blocking Settings', 'block-requests'),
+        __('Request Blocking Settings', 'wp-urldetails-disabler'),
         'block_requests_settings_section_callback',
-        'block-requests-settings'
+        'wp-urldetails-disabler-settings'
     );
 
     add_settings_field(
         'block_requests_enable',
-        __('Enable', 'block-requests'),
+        __('Enable', 'wp-urldetails-disabler'),
         'block_requests_enable_callback',
-        'block-requests-settings',
+        'wp-urldetails-disabler-settings',
         'block_requests_settings_section'
     );
 }
 
 function block_requests_settings_section_callback()
 {
-    echo '<p>' . esc_html__('Configure the request blocking settings for your site.', 'block-requests') . '</p>';
+    echo '<p>' . esc_html__('Configure the request blocking settings for your site.', 'wp-urldetails-disabler') . '</p>';
 }
 
 add_action('admin_init', 'block_requests_register_settings');
@@ -37,10 +44,10 @@ add_action('admin_init', 'block_requests_register_settings');
 function block_requests_add_settings_page()
 {
     add_options_page(
-        __('WP-URLDetails Disabler', 'block-requests'),
-        __('Block WP-URLDetails', 'block-requests'),
+        __('WP-URLDetails Disabler', 'wp-urldetails-disabler'),
+        __('Block WP-URLDetails', 'wp-urldetails-disabler'),
         'manage_options',
-        'block-requests-settings',
+        'wp-urldetails-disabler-settings',
         'block_requests_settings_page'
     );
 }
@@ -51,11 +58,11 @@ function block_requests_settings_page()
 {
     ?>
     <div class="wrap">
-        <h1><?php esc_html_e('Block Requests Settings', 'block-requests'); ?></h1>
+        <h1><?php esc_html_e('WP-URLDetails Disabler', 'wp-urldetails-disabler'); ?></h1>
         <form method="post" action="options.php">
             <?php
             settings_fields('block_requests_settings_group');
-            do_settings_sections('block-requests-settings');
+            do_settings_sections('wp-urldetails-disabler-settings');
             submit_button();
             ?>
         </form>
@@ -70,10 +77,14 @@ function block_requests_enable_callback()
     ?>
     <label>
         <input type="checkbox" name="block_requests_enable" value="1" <?php checked($option, '1'); ?>>
-        <?php esc_html_e('Enable blocking requests with the WP-URLDetails user agent.', 'block-requests'); ?>
+        <?php esc_html_e('Enable blocking requests with the WP-URLDetails user agent.', 'wp-urldetails-disabler'); ?>
     </label>
     <?php
 }
+
+// Settings boilerplate and shitfest end
+
+// Actual blocking logic
 
 function block_requests_filter($pre, $args, $url)
 {
