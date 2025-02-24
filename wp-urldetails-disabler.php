@@ -56,7 +56,7 @@ function log_request($user_agent, $request_url)
 }
 
 
-// Settings boilerplate and shitfest begin
+// Settings boilerplate begin
 
 function register_settings()
 {
@@ -116,9 +116,9 @@ function settings_page()
             ?>
         </form>
 
-        <h2><?php esc_html_e('Filtered requests (last 100)', 'logged-requests'); ?></h2>
+        <h2><?php esc_html_e('Filtered requests (last 100)', 'wp-urldetails-disabler'); ?></h2>
         <form method="post">
-            <?php submit_button(__('Clear logs', 'logged-requests'), 'delete', 'clear_log', false); ?>
+            <?php submit_button(__('Clear logs', 'wp-urldetails-disabler'), 'delete', 'clear_log', false); ?>
         </form>
 
         <?php if (!empty($logs)) : ?>
@@ -141,7 +141,7 @@ function settings_page()
                 </tbody>
             </table>
         <?php else : ?>
-            <p><?php esc_html_e('No blocked requests logged.', 'logged-requests'); ?></p>
+            <p><?php esc_html_e('No blocked requests logged.', 'wp-urldetails-disabler'); ?></p>
         <?php endif; ?>
     </div>
     <?php
